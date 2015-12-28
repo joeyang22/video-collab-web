@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = monogoose.Schema;
 
-var Song = new Schema({
+var Video = new Schema({
   title: String,
-  artist: String,
-  track_id: String,
+  channel: String,
+  video_id: String,
   votes: Number
 });
 
-mongoose.model('Song', Song);
+mongoose.model('Video', Video);
