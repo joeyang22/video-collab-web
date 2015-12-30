@@ -17,17 +17,4 @@ io.on('connection', function(socket){
   });
 });
 
-var mongoose = require('mongoose');
-
-var uri = (app.get('env') == 'development')?
-'mongodb://localhost/5000' : 'mongodb://heroku_kf13ptv1:3qjE4hszg1c5FIyshYgsUm9e5udjJkvu@ds027415.mongolab.com:27415/heroku_kf13ptv1';
-
-mongoose.connect(uri, function(err){
-  if (err){
-    console.log('error: ',err);
-  }else{
-    console.log('connected to  '+uri);
-  }
-});
-
 module.exports = app;

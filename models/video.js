@@ -1,11 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = monogoose.Schema;
-
-var Video = new Schema({
-  title: String,
-  channel: String,
-  video_id: String,
-  votes: Number
-});
-
-mongoose.model('Video', Video);
+var Video = function(title, channel, videoID){
+  var channel= channel;
+  var title= title;
+  var video_id= videoID;
+  var votes= 0;
+}
