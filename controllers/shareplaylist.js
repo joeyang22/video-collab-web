@@ -2,15 +2,16 @@ var io;
 var playlistSocket;
 var rooms = {};
 var Room = require('../models/room.js').Room;
+var socketConstants = require('../socketConstants.js');
 
 exports.initializeApp = function (socketIo, socket){
   io = socketIo;
   playlistSocket = socket;
-
-  playlistSocket.on('createNewPlaylist', createNewPlaylist);
-  playlistSocket.on('joining room', userJoined);
-  playlistSocket.on('video added', addVideo);
-  playlistSocket.on('video voted', videoVoted);
+  console.log(socketConstants.createPlaylist);
+  playlistSocket.on(socketConstants.createPlaylist, createNewPlaylist);
+  playlistSocket.on(socketConstants.joiningRoom, userJoined);
+  playlistSocket.on(socketConstants.videoAdded, addVideo);
+  playlistSocket.on(socketConstants.videoVoted, videoVoted);
 
 }
 
@@ -18,9 +19,9 @@ function createNewPlaylist(data){
   var room = new Room(data.userId);
   var socket = this;
   rooms[room.id] = room;
-  socket.emit('room created', {"roomId":room.id});
-  console.log(rooms);
+  socket.emit(socketConstants.roomCreated, {"roomId":room.id});
   console.log("created room "+room.id);
+
 }
 
 function addVideo(data){
@@ -43,8 +44,7 @@ function userJoined(data){
     console.log(rooms);
   if (rooms[data.roomId] != null){
     socket.join(data.roomId);
-    io.in(data.roomId).emit('user joined', data);
-    console.log("joined room succesfully");
+    io.in(data.roomId).emit(socketConstants.joinSuccessful, data);
   }else{
     console.log("failed to join room");
   }
