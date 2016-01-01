@@ -8,7 +8,7 @@ exports.initializeApp = function (socketIo, socket){
   playlistSocket = socket;
 
   playlistSocket.on('createNewPlaylist', createNewPlaylist);
-  playlistSocket.on('user joined', userJoined);
+  playlistSocket.on('joining room', userJoined);
   playlistSocket.on('video added', addVideo);
   playlistSocket.on('video voted', videoVoted);
 
@@ -18,7 +18,9 @@ function createNewPlaylist(data){
   var room = new Room(data.userId);
   var socket = this;
   rooms[room.id] = room;
-  userJoined(data.userId);
+  socket.emit('room created', {"roomId":room.id});
+  console.log(rooms);
+  console.log("created room "+room.id);
 }
 
 function addVideo(data){
@@ -38,8 +40,12 @@ function videoVoted(data){
 
 function userJoined(data){
   var socket = this;
-  if (rooms[data.room] == "active"){
+    console.log(rooms);
+  if (rooms[data.roomId] != null){
     socket.join(data.roomId);
-    io.in(data.room).emit('user joined', data);
+    io.in(data.roomId).emit('user joined', data);
+    console.log("joined room succesfully");
+  }else{
+    console.log("failed to join room");
   }
 }
