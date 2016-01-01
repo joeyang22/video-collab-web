@@ -1,7 +1,7 @@
 var io;
 var playlistSocket;
 var rooms = {};
-var Room = require('../models/room.js');
+var Room = require('../models/room.js').Room;
 
 exports.initializeApp = function (socketIo, socket){
   io = socketIo;
