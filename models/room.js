@@ -1,4 +1,4 @@
-var Room = function(adminId){
+exports.Room = function(adminId){
   var id = getRandomRoomName(4);
   var adminId = adminId;
   var videos = buckets.PriorityQueue(videoVotesComparator);
