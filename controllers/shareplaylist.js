@@ -16,7 +16,9 @@ exports.initializeApp = function (socketIo, socket){
 
 function createNewPlaylist(data){
   var room = new Room(data.userId);
+  var socket = this;
   rooms[room.id] = room;
+  userJoined(data.userId);
 }
 
 function addVideo(data){
