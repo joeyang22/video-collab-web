@@ -7,7 +7,6 @@ var socketConstants = require('../socketConstants.js');
 exports.initializeApp = function (socketIo, socket){
   io = socketIo;
   playlistSocket = socket;
-  console.log(socketConstants.createPlaylist);
   playlistSocket.on(socketConstants.createPlaylist, createNewPlaylist);
   playlistSocket.on(socketConstants.joiningRoom, userJoined);
   playlistSocket.on(socketConstants.videoAdded, addVideo);

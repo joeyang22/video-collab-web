@@ -1,6 +1,6 @@
-global.createPlaylist = "create new playlist";
-global.joiningRoom = "joining room";
-global.videoAdded = "video added";
-global.videoVoted = "video voted";
-global.roomCreated = "room created";
-global.joinSuccessful = "join successful";
+exports.createPlaylist = "create new playlist";
+exports.joiningRoom = "joining room";
+exports.videoAdded = "video added";
+exports.videoVoted = "video voted";
+exports.roomCreated = "room created";
+exports.joinSuccessful = "join successful";

@@ -8,7 +8,6 @@ var Room = require('./models/room.js').Room
 app.set('port', (process.env.PORT || 5000));
 server.listen(app.get('port'));
 
-
 var room = new Room("asdf");
 io.on('connection', function(socket){
   console.log('a user connected');
