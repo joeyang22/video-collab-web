@@ -3,7 +3,7 @@ var buckets = require('buckets-js');
 exports.Room = function (adminId){
   this.id = getRandomRoomName(4);
   this.adminId = adminId;
-  this.videos = buckets.PriorityQueue(videoVotesComparator);
+  this.videos = new buckets.PriorityQueue(videoVotesComparator);
 }
 
 function videoVotesComparator(a,b){
