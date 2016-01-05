@@ -4,6 +4,7 @@ exports.Room = function (adminId){
   this.id = getRandomRoomName(4);
   this.adminId = adminId;
   this.videos = new buckets.PriorityQueue(videoVotesComparator);
+  this.users = [];
 }
 
 function videoVotesComparator(a,b){

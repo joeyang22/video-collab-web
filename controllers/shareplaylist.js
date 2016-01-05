@@ -40,10 +40,10 @@ function videoVoted(data){
 
 function userJoined(data){
   var socket = this;
-    console.log(rooms);
+  console.log(rooms);
   if (data != null && rooms[data.roomId] != null){
-    socket.join(data.roomId);
-    io.in(data.roomId).emit(socketConstants.joinSuccessful, rooms[data.roomId].videos.toArray());
+    socket.join(data.roomId.toUpperCase());
+    io.in(data.roomId.toUpperCase()).emit(socketConstants.joinSuccessful, rooms[data.roomId.toUpperCase()].videos.toArray());
   }else{
     console.log("failed to join room");
   }
