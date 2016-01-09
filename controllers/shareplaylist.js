@@ -27,24 +27,28 @@ function createNewPlaylist (data){
 function addVideo(data){
   //var video = new Video(data.videoId)
   var socket = this;
+  console.log("data added: "+data);
   if (rooms[data.roomId]!= null){
       room = rooms[data.roomId];
-      if (videoVotes[data.videoId]!= null){
+      if (room.videoVotes[data.videoId]!= null){
         videoVoted(data);
       }else{
         room.videos.push(data.videoId);
         room.videoVotes[videoId] = 1;
+        console.log(room.videos);
+
         socket.emit(socketConstants.videoAdded, {
           "videos":room.videos,
           "video_votes":room.videoVotes
         });
       }
+      console.log(room);
   }
-  console.log(rooms);
 }
 
 function videoVoted(data){
   var socket = this;
+    console.log("data voted: "+data);
   if (rooms[data.roomId]!= null && room.videoVotes.contains(data.roomId)){
       room = rooms[data.roomId];
       room.videoVotes[data.videoId]++;
@@ -62,8 +66,9 @@ function videoVoted(data){
         "videos":room.videos,
         "video_votes":room.videoVotes,
         "order_changed":orderChanged
-      })
-      console.log(rooms);
+      });
+      console.log(room);
+
   }
 }
 
