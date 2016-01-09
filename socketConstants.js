@@ -4,3 +4,6 @@ exports.videoAdded = "video added";
 exports.videoVoted = "video voted";
 exports.roomCreated = "room created";
 exports.joinSuccessful = "join successful";
+exports.playlistChanged = "playlist changed";
+exports.addingVideo = "adding video";
+exports.votingVideo = "voting video";

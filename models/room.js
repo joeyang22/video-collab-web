@@ -3,7 +3,8 @@ var buckets = require('buckets-js');
 exports.Room = function (adminId){
   this.id = getRandomRoomName(4);
   this.adminId = adminId;
-  this.videos = new buckets.Heap(videoVotesComparator);
+  this.videos = [];
+  this.videoVotes = {};
   this.users = [];
 }
 

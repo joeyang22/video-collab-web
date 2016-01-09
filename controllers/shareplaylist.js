@@ -9,8 +9,8 @@ exports.initializeApp = function (socketIo, socket){
   playlistSocket = socket;
   playlistSocket.on(socketConstants.createPlaylist, createNewPlaylist);
   playlistSocket.on(socketConstants.joiningRoom, userJoined);
-  playlistSocket.on(socketConstants.videoAdded, addVideo);
-  playlistSocket.on(socketConstants.videoVoted, videoVoted);
+  playlistSocket.on(socketConstants.addingVideo, addVideo);
+  playlistSocket.on(socketConstants.votingVideo, videoVoted);
 
 }
 
@@ -21,24 +21,49 @@ exports.createNewPlaylist = function(data){
   socket.emit(socketConstants.roomCreated, {"roomId":room.id});
   console.log("created room "+room.id);
 
+
 }
 
 exports.addVideo = function(data){
-  var video = new Video(data.videoId)
+  //var video = new Video(data.videoId)
   var socket = this;
   if (rooms[data.roomId]!= null){
-    rooms.videos.add(video);
+      room = rooms[data.roomId];
+      if (videoVotes[data.videoId]!= null){
+        videoVoted(data);
+      }else{
+        room.videos.push(data.videoId);
+        room.videoVotes[videoId] = 1;
+        socket.emit(socketConstants.videoAdded, {
+          "videos":room.videos,
+          "video_votes":room.videoVotes
+        });
+      }
   }
+  console.log(rooms);
 }
 
 exports.videoVoted = function(data){
-  if (rooms[data.room] != null){
-    rooms[data.room].videos.forEach(function(video){
-      if (video.video_id == data.id){
-        video.votes++;
-        return false;
+  var socket = this;
+  if (rooms[data.roomId]!= null && room.videoVotes.contains(data.roomId)){
+      room = rooms[data.roomId];
+      room.videoVotes[data.videoId]++;
+      var i = room.videos.indexOf(data.videoId);
+      var orderChanged = false;
+      while (i>0 && videoVotes[videos[i-1]]< videoVotes[videos[i]]){
+        var tmp = videos[i];
+        videos[i] = videos[i-1];
+        videos[i-1] = tmp;
+        i--;
+        orderChanged = true;
       }
-    });
+
+      socket.emit(socketConstants.videoVoted, {
+        "videos":room.videos,
+        "video_votes":room.videoVotes,
+        "order_changed":orderChanged
+      })
+      console.log(rooms);
   }
 }
 
