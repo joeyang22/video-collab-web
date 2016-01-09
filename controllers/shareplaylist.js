@@ -49,7 +49,7 @@ function addVideo(data){
 function videoVoted(data){
   var socket = this;
     console.log("data voted: "+data);
-  if (rooms[data.roomId]!= null && room.videosVotes[data.videoId]!= null){
+  if (rooms[data.roomId]!= null && room.videoVotes[data.videoId]!= null){
       room = rooms[data.roomId];
       room.videoVotes[data.videoId]++;
       var i = room.videos.indexOf(data.videoId);
