@@ -31,7 +31,7 @@ function addVideo(data){
   if (rooms[data.roomId]!= null){
       room = rooms[data.roomId];
       if (room.videoVotes[data.videoId]!= null){
-        videoVoted(data);
+        videoVoted(data, socket);
       }else{
         room.videos.push(data.videoId);
         room.videoVotes[data.videoId] = 1;
@@ -46,8 +46,8 @@ function addVideo(data){
   }
 }
 
-function videoVoted(data){
-  var socket = this;
+function videoVoted(data, socket){
+  var socket = socket || this;
     console.log("data voted: "+data);
   if (rooms[data.roomId]!= null && room.videoVotes[data.videoId]!= null){
       room = rooms[data.roomId];
