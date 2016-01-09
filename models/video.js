@@ -1,6 +1,4 @@
-var Video = function(title, channel, videoID){
-  var channel= channel;
-  var title= title;
-  var video_id= videoID;
-  var votes= 0;
+exports.Video = function(videoId, votes){
+  this.video_id= videoId;
+  this.votes= votes || 1;
 }

@@ -14,7 +14,7 @@ exports.initializeApp = function (socketIo, socket){
 
 }
 
-function createNewPlaylist(data){
+exports.createNewPlaylist = function(data){
   var room = new Room(data.userId);
   var socket = this;
   rooms[room.id] = room;
@@ -23,22 +23,26 @@ function createNewPlaylist(data){
 
 }
 
-function addVideo(data){
-  var video = new Video(data.title, data.channel, data.videoId)
+exports.addVideo = function(data){
+  var video = new Video(data.videoId)
+  var socket = this;
+  if (rooms[data.roomId]!= null){
+    rooms.videos.add(video);
+  }
 }
 
-function videoVoted(data){
+exports.videoVoted = function(data){
   if (rooms[data.room] != null){
     rooms[data.room].videos.forEach(function(video){
       if (video.video_id == data.id){
         video.votes++;
         return false;
       }
-    })
+    });
   }
 }
 
-function userJoined(data){
+exports.userJoined = function(data){
   var socket = this;
   console.log(rooms);
   if (data != null && rooms[data.roomId] != null){
