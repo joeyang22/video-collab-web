@@ -14,7 +14,7 @@ exports.initializeApp = function (socketIo, socket){
 
 }
 
-exports.createNewPlaylist = function(data){
+function createNewPlaylist (data){
   var room = new Room(data.userId);
   var socket = this;
   rooms[room.id] = room;
@@ -24,7 +24,7 @@ exports.createNewPlaylist = function(data){
 
 }
 
-exports.addVideo = function(data){
+function addVideo(data){
   //var video = new Video(data.videoId)
   var socket = this;
   if (rooms[data.roomId]!= null){
@@ -43,7 +43,7 @@ exports.addVideo = function(data){
   console.log(rooms);
 }
 
-exports.videoVoted = function(data){
+function videoVoted(data){
   var socket = this;
   if (rooms[data.roomId]!= null && room.videoVotes.contains(data.roomId)){
       room = rooms[data.roomId];
@@ -67,12 +67,12 @@ exports.videoVoted = function(data){
   }
 }
 
-exports.userJoined = function(data){
+function userJoined(data){
   var socket = this;
   console.log(rooms);
   if (data != null && rooms[data.roomId] != null){
     socket.join(data.roomId.toUpperCase());
-    io.in(data.roomId.toUpperCase()).emit(socketConstants.joinSuccessful, rooms[data.roomId.toUpperCase()].videos.toArray());
+    io.in(data.roomId.toUpperCase()).emit(socketConstants.joinSuccessful, rooms[data.roomId.toUpperCase()]);
   }else{
     console.log("failed to join room");
   }
