@@ -34,7 +34,7 @@ function addVideo(data){
         videoVoted(data);
       }else{
         room.videos.push(data.videoId);
-        room.videoVotes[videoId] = 1;
+        room.videoVotes[data.videoId] = 1;
         console.log(room.videos);
 
         socket.emit(socketConstants.videoAdded, {
@@ -49,15 +49,15 @@ function addVideo(data){
 function videoVoted(data){
   var socket = this;
     console.log("data voted: "+data);
-  if (rooms[data.roomId]!= null && room.videoVotes.contains(data.roomId)){
+  if (rooms[data.roomId]!= null && room.videosVotes[data.videoId]!= null){
       room = rooms[data.roomId];
       room.videoVotes[data.videoId]++;
       var i = room.videos.indexOf(data.videoId);
       var orderChanged = false;
-      while (i>0 && videoVotes[videos[i-1]]< videoVotes[videos[i]]){
-        var tmp = videos[i];
-        videos[i] = videos[i-1];
-        videos[i-1] = tmp;
+      while (i>0 && room.videoVotes[room.videos[i-1]]< room.videoVotes[room.videos[i]]){
+        var tmp = room.videos[i];
+        room.videos[i] = room.videos[i-1];
+        room.videos[i-1] = tmp;
         i--;
         orderChanged = true;
       }
