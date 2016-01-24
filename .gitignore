@@ -27,3 +27,4 @@ ehthumbs.db
 Thumbs.db
 
 /node_modules/*
+auth.js

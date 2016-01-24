@@ -7,6 +7,7 @@ var socketConstants = require('../socketConstants.js');
 exports.initializeApp = function (socketIo, socket){
   io = socketIo;
   playlistSocket = socket;
+  io.on("connection", joinRoom);
   playlistSocket.on(socketConstants.createPlaylist, createNewPlaylist);
   playlistSocket.on(socketConstants.joiningRoom, userJoined);
   playlistSocket.on(socketConstants.addingVideo, addVideo);
@@ -20,8 +21,6 @@ function createNewPlaylist (data){
   rooms[room.id] = room;
   socket.emit(socketConstants.roomCreated, {"roomId":room.id});
   console.log("created room "+room.id);
-
-
 }
 
 function addVideo(data){
@@ -77,6 +76,7 @@ function userJoined(data){
   console.log(rooms);
   if (data != null && rooms[data.roomId] != null){
     socket.join(data.roomId.toUpperCase());
+    roomsp[data.roomId].users.append(data.userId);
     io.in(data.roomId.toUpperCase()).emit(socketConstants.joinSuccessful, rooms[data.roomId.toUpperCase()]);
   }else{
     console.log("failed to join room");
